@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="bundle.js" defer></script>
+    <title>Todo List</title>
+</head>
+<body>
+    <div id="content">
+        <div class="side-banner">
+            <h2>Projects</h2>
+            <button onclick="showProjectForm()">+ New Project</button>
+            <div id="project-list">
+                <form id="projectForm" style="display: none;">
+                    <label for="projectName">Enter project name:</label>
+                    <input type="text" id="projectName" name="projectName" placeholder="Project name">
+                    <button type="submit">Create Project</button>
+                    <button type="button" onclick="cancelProjectForm()">Cancel</button>
+                </form>
+            </div>
+        </div>
+        <div class="main-body">
+            <h1>HUSTLE HUB</h1>
+            <button>Hustle Harder (add a new task)</button>
+            <div class="tasks">
+                <div class="task-item-div">
+                    <div><a>Task</a></div>
+                    <div>Due: <span>Due Date</span></div>
+                    <img src="../src/square-edit-outline.svg" alt="SVG Image" width="15" height="15" class="svg-hover">
+                    <img src="../src/check-circle-outline.svg" alt="SVG Image" width="15" height="15" class="svg-hover">
+                    <img src="../src/trash-can-outline.svg" alt="SVG Image" width="15" height="15" class="svg-hover">
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap');
+
+* {
+    margin: 0px;
+    box-sizing: border-box;
+    font-family: 'Comic Neue', cursive;
+}
+
+body, html {
+    height: 100%;
+}
+
+#content {
+    display: grid;
+    grid-template-columns: minmax(250px, 0.25fr) 1fr;
+    grid-template-rows: 100vh;
+}
+
+.side-banner {
+    background-color: #f0f0f0;
+    padding: 20px;
+    display: grid;
+    align-items: center;
+    grid-template-rows: 50px 50px 1fr;
+}
+
+.side-banner button {
+    align-self: start;
+    background-color: forestgreen;
+    border: none;
+    border-radius: 5px;
+    border: solid black .5px;
+    max-width: 100px;
+}
+
+button:hover {
+    color: #fff; /* Change text color on hover */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow on hover */
+    transform: translateY(-2px); /* Move button slightly upwards on hover */
+}
+
+
+#project-list {
+    display: grid;
+    align-self: start;
+    gap: 20px;
+}
+
+#projectForm {
+    display: grid;
+    align-self: start;
+    gap: 5px;
+    margin-bottom: 20px;
+}
+
+.project {
+    align-self: start;
+    display: grid;
+    grid-template-columns: minmax(100px, 1fr) minmax(100px, 3fr);
+    gap: 10px;
+    align-items: center;
+}
+
+.project a {
+    justify-self: start;
+}
+
+.project img {
+    justify-self: start;
+}
+
+a:hover {
+    text-decoration: underline; 
+    color: forestgreen;
+    cursor: pointer;
+}
+
+.svg-hover:hover {
+    cursor: pointer;
+}
+
+.main-body {
+    background-color: #ffffff;
+    padding: 20px;
+    display: grid;
+    align-items: center;
+    grid-template-rows: 50px 50px 1fr;
+}
+
+.main-body button {
+    align-self: start;
+    width: 200px;
+    background-color: forestgreen;
+    border: none;
+    border-radius: 5px;
+    border: solid black .5px;
+}
+
+.tasks {
+    display: grid;
+    gap: 20px;
+    align-self: start;
+}
+
+.task-item-div {
+    border: 1px solid #ccc;
+    padding: 10px;
+    align-self: start;
+    display: grid;
+    grid-template-columns: .5fr .5fr .25fr .25fr .25fr;
+    align-items: center;
+}
