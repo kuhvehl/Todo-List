@@ -1,70 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Todo list</title>
-    <script defer src="bundle.js"></script>
-  </head>
-
-  <body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="./bundle.js" defer></script>
+  <title>Todo List</title>
+</head>
+<body>
+  <h1>STUFF TO DO</h1>
+  <div class="main-container">
+    <div class="projects-container">
+      <h2>Projects</h2>
+      <div class="projects"></div>
+      <div class="new-delete-project">
+      <form id="new-project-form">
+        <label for="newProject">Add New Project:</label>
+        <input type="text" id="newProject" name="newProject">
+        <button type="submit">Submit</button>
+      </form>
+      <button class="delete-project">Delete Selected Project</button>
+      </div>
+    </div>
+    <div class="tasks-container">
+      <h2 class="label">Todo:</h2>
+      <div class="tasks">
+        
+      </div>
+      <form id="addTaskForm">
+        <label for="taskName">Task Name:</label>
+        <input type="text" id="taskName" name="taskName" required>
     
-    <h1 class="title">Hustle Hub</h1>
-    <div class="all-projects">
-      <h2 class="project-list-title">My projects</h2>
-      <ul class="project-list" data-projects></ul>
-
-      <form action="" data-new-project-form>
-        <input 
-          type="text"
-          class="new project"
-          data-new-project-input
-          placeholder="new project name"
-          aria-label="new project name"
-        />
-        <button class="btn create" aria-label="create new project">+</button>
+        <label for="taskDescription">Task Description:</label>
+        <input type="text" id="taskDescription" name="taskDescription">
+    
+        <label for="taskDueDate">Due Date:</label>
+        <input type="date" id="taskDueDate" name="taskDueDate">
+    
+        <label for="taskPriority">Priority:</label>
+        <select id="taskPriority" name="taskPriority">
+          <option value="High">High</option>
+          <option value="Normal">Normal</option>
+          <option value="Low">Low</option>
+        </select>
+    
+        <label for="taskNotes">Notes:</label>
+        <textarea id="taskNotes" name="taskNotes"></textarea>    
+        <button type="submit">Add Task</button>
       </form>
     </div>
+  </div>
 
-    <div class="todo-list" todo-list-display-container>
-      <div class="todo-header">
-        <h2 class="list-title" project-list-title>YouTube</h2>
-        <p class="task-count" data-task-count>3 tasks remaining</p>
-      </div>
-
-      <div class="todo-body">
-        <div class="tasks" data-tasks></div>
-
-        <div class="new-task-creator">
-            <form action="" data-new-task-form>
-                <input 
-                  type="text"
-                  data-new-task-input
-                  class="new task"
-                  placeholder="new task name"
-                  aria-label="new task name"
-                />
-                <button class="btn create" aria-label="create new task">+</button>
-              </form>
-        </div>
-
-        <div class="delete-stuff">
-          <button class="btn delete" data-clear-complete-tasks-button>Clear completed tasks</button>
-          <button class="btn delete" data-delete-project-button>Delete Project</button>
-        </div>
-      </div>
-    </div>
-
-   
-    </div>
-    <template id="task-template">
-      <div class="task">
-        <input type="checkbox" />
-        <label>
-          <span class="custom-checkbox"></span>
-        </label>
-      </div>
-    </template>
-  </body>
+</body>
 </html>
