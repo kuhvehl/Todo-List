@@ -176,7 +176,6 @@ projectsDiv.addEventListener('click', e => {
 
 deleteButton.addEventListener('click', e => {
     deleteProject(selectedProjectId);
-    selectedProjectId = "";
     render();
 })
 
@@ -185,10 +184,13 @@ deleteButton.addEventListener('click', e => {
 function displayTasks() {
     tasksDiv.innerHTML = '';
     const selectedProject = getSelectedProject(selectedProjectId);
+    console.log(selectedProject);
     const label = document.querySelector('.label')
 
-    if (selectedProject) {
-    label.textContent = `${selectedProject.name} to-do items:`
+    if (selectedProject === undefined) {
+        label.textContent = "";
+    } else if (selectedProject) {
+        label.textContent = `${selectedProject.name} to-do items:`
     } else {
         return
     }
@@ -347,5 +349,16 @@ function showEditTaskForm() {
     textarea.name = id;
     return textarea;
   }
+
+
+
+
+if (projects.length === 0) {
+    const defaultProject = createProject("Default Project");
+    defaultProject.id = "1";
+    selectedProjectId = "1";
+    projects.push(defaultProject);
+    saveProjectsToLocalStorage();
+}
 
 render();
