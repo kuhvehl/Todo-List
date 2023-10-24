@@ -1,21 +1,51 @@
-const LOCAL_STORAGE_PROJECT_LIST_KEY = 'list.projects'
-const LOCAL_STORAGE_SELECTED_PROJECT_ID_KEY = 'list.selectedProjectId'
-export let projects = JSON.parse(localStorage.getItem(LOCAL_STORAGE_PROJECT_LIST_KEY)) || []
-export let selectedProjectId = localStorage.getItem(LOCAL_STORAGE_SELECTED_PROJECT_ID_KEY)
+const LOCAL_STORAGE_SELECTED_PROJECT_ID_KEY = 'selectedProjectId'
+const LOCAL_STORAGE_PROJECTS_KEY = 'projects'
 
-export function createProject(name) {
-    return { 
-        id: Date.now().toString(), 
-        name: name, 
-        tasks: []
+export let selectedProjectId = localStorage.getItem(LOCAL_STORAGE_SELECTED_PROJECT_ID_KEY)
+export let projects = JSON.parse(localStorage.getItem(LOCAL_STORAGE_PROJECTS_KEY));
+
+export function saveProjectsToLocalStorage() {
+    localStorage.setItem('projects', JSON.stringify(projects));
+    localStorage.setItem(LOCAL_STORAGE_SELECTED_PROJECT_ID_KEY, selectedProjectId)
+}
+
+export class Task {
+    constructor(task, description, due, priority, notes) {
+        this.id = Date.now().toString()
+        this.Task = task;
+        this.Description = description;
+        this.Due = due;
+        this.Priority = priority;
+        this.Notes = notes;
     }
 }
 
-export function createTask(name) {
-    return { id: Date.now().toString(), name: name, complete: false }
-  }
+class Project {
+    constructor(name) {
+        this.id = Date.now().toString()
+        this.name = name;
+        this.tasks = [];
+    }
+    
+    addTask(task, description, due, priority, notes, subtasks = []) {
+        const newTask = new Task(task, description, due, priority, notes, subtasks);
+        this.tasks.push(newTask);
+        saveProjectsToLocalStorage();
+        return this;
+    }
 
-export function save() {
-    localStorage.setItem(LOCAL_STORAGE_PROJECT_LIST_KEY, JSON.stringify(projects))
-    localStorage.setItem(LOCAL_STORAGE_SELECTED_PROJECT_ID_KEY, selectedProjectId)
-  }
+    deleteTask(taskId) {
+        this.tasks = this.tasks.filter(task => task.id !== taskId)
+        saveProjectsToLocalStorage();
+        return this
+    }
+}
+
+export function createProject(name) {
+    const newProject = new Project(name);
+    return newProject
+}
+
+export function deleteProject(projectToDelete) {
+    projects = projects.filter(project => project.id !== projectToDelete.id)
+}
