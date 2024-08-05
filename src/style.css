@@ -1,8 +1,50 @@
-body {
-    height: 100vh;
-    background: url(./chicken.png);
-}
+*, *::before, *::after {
+    box-sizing: border-box;
+  }
+  * {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  body {
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+  }
+  input, button, textarea, select {
+    font: inherit;
+  }
+  p, h1, h2, h3, h4, h5, h6 {
+    overflow-wrap: break-word;
+  }
+  #root, #__next {
+    isolation: isolate;
+  }
 
-h1 {
-    color: red;
+  body {
+    height: 100vh;
+  }
+
+  .container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-areas: 
+    'header header'
+    'sidebar main';
+    padding: 1rem;
+  }
+
+  .header {
+    grid-area: header;
+    display: grid;
+  }
+
+  .sidebar {
+    grid-area: sidebar;
+  }
+
+  .main {
+    grid-area: main;
   }
