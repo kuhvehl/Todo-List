@@ -1,0 +1,8 @@
+body {
+    height: 100vh;
+    background: url(./chicken.png);
+}
+
+h1 {
+    color: red;
+  }
