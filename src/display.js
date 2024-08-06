@@ -1,7 +1,9 @@
+import { openDialogue } from "./listeners";
+
 export function updateProjectsDisplay(projects, index) {
     const projectsList = document.querySelector('.projects');
     const tasksList = document.querySelector('.tasks');
-
+    openDialogue();
 
     projects.forEach(project => {
         const projectButton = document.createElement('div');
@@ -16,11 +18,13 @@ export function updateProjectsDisplay(projects, index) {
         const dueDate = document.createElement('div');
         const editButton = document.createElement('button');
         const deleteButton = document.createElement('button');
-
-
         
         taskDiv.classList.add('task');
         taskCircle.classList.add('circle');
+        editButton.classList.add('edit');
+        deleteButton.classList.add('delete');
+
+
         taskTitle.textContent = task.title;
         dueDate.textContent = `Due ${task.dueDate}`;
         editButton.textContent = 'View/Edit';
@@ -34,9 +38,12 @@ export function updateProjectsDisplay(projects, index) {
         tasksList.appendChild(taskDiv);
     });
 
+    function updateTasksDisplay() {
+
+    }
 
 
 
 
-    console.log(projects[index].getTasks());
+
 }
