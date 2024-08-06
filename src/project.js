@@ -1,4 +1,4 @@
-export function createProject (name) {
+export function createProject (title) {
     const tasks = [];
 
     function getTasks() {
@@ -17,5 +17,5 @@ export function createProject (name) {
         tasks.splice(i, 1);
     }
 
-    return { name, addTask, getTasks, getTask, deleteTask };
+    return { title, addTask, getTasks, getTask, deleteTask };
 }
