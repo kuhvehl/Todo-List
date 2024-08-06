@@ -7,7 +7,17 @@
 </head>
 <body>
     <div class="container">
-        <dialog>
+        <dialog class="project-dialog">
+            <button class="cancel" form="newProject" value="cancel" formnovalidate>Cancel</button>
+            <form id="newProject" method="dialog">
+                <div class="project-title-input">
+                    <label for="project-title">Project:</label>
+                    <input type="text" id="project-title" name="project-title" required>
+                </div>
+            </form>
+            <button class="submit" type="submit" form="newProject" value="submit">Submit</button>
+        </dialog>
+        <dialog class="task-dialog">
             <button class="cancel" form="newListItem" value="cancel" formnovalidate>Cancel</button>
             <form id="newListItem" method="dialog">
                 <div class="title-input">

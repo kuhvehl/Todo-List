@@ -1,17 +1,21 @@
-import { openDialogue } from "./listeners";
+import { addListeners } from "./listener-functions";
+import { projectsObj } from "./projects"; 
 
 export function updateProjectsDisplay(projects, index) {
     const projectsList = document.querySelector('.projects');
     const tasksList = document.querySelector('.tasks');
-    openDialogue();
 
-    projects.forEach(project => {
+    projectsList.innerHTML = '';
+    tasksList.innerHTML = '';
+
+    projectsObj.getProjects().forEach((project, projectIndex) => {
         const projectButton = document.createElement('div');
+        projectButton.dataset.projectIndex = projectIndex;
         projectButton.textContent = project.title;  
         projectsList.appendChild(projectButton);
     })
 
-    projects[index].getTasks().forEach(task => {
+    projectsObj.getProjects()[index].getTasks().forEach(task => {
         const taskDiv = document.createElement('div');
         const taskCircle = document.createElement('div');
         const taskTitle = document.createElement('div');
@@ -38,12 +42,5 @@ export function updateProjectsDisplay(projects, index) {
         tasksList.appendChild(taskDiv);
     });
 
-    function updateTasksDisplay() {
-
-    }
-
-
-
-
-
+    addListeners();
 }
