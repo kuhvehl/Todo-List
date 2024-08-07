@@ -1,21 +1,27 @@
-import { addListeners } from "./listener-functions";
-import { projectsObj } from "./projects"; 
+import { addListeners } from "./listeners";
 
-export function updateProjectsDisplay(projects, index) {
-    const projectsList = document.querySelector('.projects');
-    const tasksList = document.querySelector('.tasks');
+export function updateDisplay(projects, index) {
+    const projectsDisplay = document.querySelector('.projects');
+    const tasksDisplay = document.querySelector('.tasks');
 
-    projectsList.innerHTML = '';
-    tasksList.innerHTML = '';
+    // console.log(currentProjectsObj);
 
-    projectsObj.getProjects().forEach((project, projectIndex) => {
+    projectsDisplay.innerHTML = '';
+    tasksDisplay.innerHTML = '';
+
+    projects.forEach((project, projectIndex) => {
         const projectButton = document.createElement('div');
         projectButton.dataset.projectIndex = projectIndex;
+        if (index == projectIndex) {
+            projectButton.classList.add('current-project', 'project');
+        } else {
+            projectButton.classList.add('project');
+        }
         projectButton.textContent = project.title;  
-        projectsList.appendChild(projectButton);
+        projectsDisplay.appendChild(projectButton);
     })
-
-    projectsObj.getProjects()[index].getTasks().forEach(task => {
+    
+    projects[index].getTasks().forEach(task => {
         const taskDiv = document.createElement('div');
         const taskCircle = document.createElement('div');
         const taskTitle = document.createElement('div');
@@ -28,7 +34,6 @@ export function updateProjectsDisplay(projects, index) {
         editButton.classList.add('edit');
         deleteButton.classList.add('delete');
 
-
         taskTitle.textContent = task.title;
         dueDate.textContent = `Due ${task.dueDate}`;
         editButton.textContent = 'View/Edit';
@@ -39,7 +44,7 @@ export function updateProjectsDisplay(projects, index) {
         taskDiv.appendChild(dueDate);
         taskDiv.appendChild(editButton);
         taskDiv.appendChild(deleteButton);
-        tasksList.appendChild(taskDiv);
+        tasksDisplay.appendChild(taskDiv);
     });
 
     addListeners();

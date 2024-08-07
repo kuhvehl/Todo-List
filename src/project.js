@@ -1,4 +1,4 @@
-export function createProject (title) {
+export function createProject(title) {
     const tasks = [];
 
     function getTasks() {

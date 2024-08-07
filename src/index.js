@@ -1,6 +1,5 @@
 import './style.css';
+import { updateDisplay } from './display';
 import { projectsObj } from './projects';
-import { updateProjectsDisplay } from './display';
-// import { createListItem } from './listItem';
 
-updateProjectsDisplay(projectsObj, 0);
+updateDisplay(projectsObj.getProjects(), 0);

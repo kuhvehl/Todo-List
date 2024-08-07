@@ -1,6 +1,7 @@
 import { projectsObj } from "./projects";
 import { createProject } from "./project";
-import { updateProjectsDisplay } from "./display";
+import { updateDisplay } from "./display";
+import { createListItem } from "./listItem";
 
 export function addListeners() {
     const addTaskButton = document.querySelector('.add-task')
@@ -12,8 +13,20 @@ export function addListeners() {
     const addProjectButton = document.querySelector('.add-project')
     const projectDialog = document.querySelector('.project-dialog');
     const projectTitle = document.querySelector('#project-title')
+    const projectDivs = document.querySelectorAll('.project')
     addProjectButton.addEventListener('click', openProjectDialogue);
     projectDialog.addEventListener('close', closeProjectDialogue);
+
+    let currentIndex;
+
+    projectDivs.forEach((div) => {
+        div.addEventListener('click', function(e) {
+            currentIndex = e.target.dataset.projectIndex;
+            console.log(currentIndex);
+            projectDialog.removeEventListener('close', closeProjectDialogue);
+            updateDisplay((projectsObj.getProjects()), e.target.dataset.projectIndex);
+        })
+    })
 
     function openProjectDialogue() {
         projectTitle.value = ''
@@ -22,8 +35,12 @@ export function addListeners() {
 
     function closeProjectDialogue() {
         if (projectDialog.returnValue === 'submit') {
-            projectsObj.addProject(createProject(projectTitle.value));
-            updateProjectsDisplay(projectsObj, projectsObj.getProjects().length - 1);
+            let newProject = createProject(projectTitle.value);
+            projectsObj.addProject(newProject);
+            currentIndex = projectsObj.getProjects().length - 1;
+            console.log(currentIndex)
+            projectDialog.removeEventListener('close', closeProjectDialogue);
+            updateDisplay((projectsObj.getProjects()), currentIndex);
         }
     }
 
@@ -39,6 +56,7 @@ export function addListeners() {
             const newDueDate = due.value;
     
             const newListItem = createListItem(newTask, newDueDate);
+
             updateProjectsDisplay([testProject, anotherTestProject], 0)
         }
     }
