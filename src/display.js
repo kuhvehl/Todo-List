@@ -20,8 +20,8 @@ export function updateDisplay(projects, index) {
         projectButton.textContent = project.title;  
         projectsDisplay.appendChild(projectButton);
     })
-    
-    projects[index].getTasks().forEach(task => {
+
+    projects[index].getTasks().forEach((task, taskIndex) => {
         const taskDiv = document.createElement('div');
         const taskCircle = document.createElement('div');
         const taskTitle = document.createElement('div');
@@ -32,7 +32,9 @@ export function updateDisplay(projects, index) {
         taskDiv.classList.add('task');
         taskCircle.classList.add('circle');
         editButton.classList.add('edit');
-        deleteButton.classList.add('delete');
+        deleteButton.classList.add('delete-task');
+        deleteButton.dataset.taskIndex = taskIndex;
+
 
         taskTitle.textContent = task.title;
         dueDate.textContent = `Due ${task.dueDate}`;

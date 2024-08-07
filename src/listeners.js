@@ -21,6 +21,14 @@ export function addListeners() {
         newTaskDialog.addEventListener('close', closeTaskDialog);
         taskCloseListening = true;
     }
+    const deleteTaskButtons = document.querySelectorAll('.delete-task')
+    deleteTaskButtons.forEach((deleteButton => {
+        deleteButton.addEventListener('click', function(e) {
+            projectsObj.getProject(currentIndex).deleteTask(e.target.dataset.taskIndex);
+            updateDisplay((projectsObj.getProjects()), currentIndex);
+        })
+    }))
+
 
 
     const addProjectButton = document.querySelector('.add-project')
@@ -28,7 +36,6 @@ export function addListeners() {
     const projectTitle = document.querySelector('#project-title')
     const projectDivs = document.querySelectorAll('.project')
     addProjectButton.addEventListener('click', openProjectDialogue);
-
     if (!projectCloseListening) {
         projectDialog.addEventListener('close', closeProjectDialogue);
         projectCloseListening = true;
@@ -37,7 +44,6 @@ export function addListeners() {
     projectDivs.forEach((div) => {
         div.addEventListener('click', function(e) {
             currentIndex = e.target.dataset.projectIndex;
-            console.log(currentIndex);
             updateDisplay((projectsObj.getProjects()), e.target.dataset.projectIndex);
         })
     })
@@ -52,7 +58,6 @@ export function addListeners() {
             let newProject = createProject(projectTitle.value);
             projectsObj.addProject(newProject);
             currentIndex = projectsObj.getProjects().length - 1;
-            console.log(currentIndex)
             updateDisplay((projectsObj.getProjects()), currentIndex);
         }
     }
@@ -68,8 +73,6 @@ export function addListeners() {
             let newTask = title.value;
             let newDueDate = due.value;
             let newListItem = createListItem(newTask, newDueDate);
-            console.log(currentIndex);
-            console.log(projectsObj.getProject(0));
             projectsObj.getProject(currentIndex).addTask(newListItem);
             updateDisplay((projectsObj.getProjects()), currentIndex)
         }
