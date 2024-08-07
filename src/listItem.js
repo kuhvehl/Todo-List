@@ -1,4 +1,4 @@
-export function createListItem(title, description, dueDate, priority = 'low', notes, checkList = [], completed = false) {
+export function createListItem(title, dueDate, description, priority = 'low', notes, checkList = [], completed = false) {
     function setCompleted() {
         completed ? completed = false : completed = true;
     }

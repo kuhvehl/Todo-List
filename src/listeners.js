@@ -36,9 +36,7 @@ export function addListeners() {
     taskCircles.forEach(taskCircle => {
         taskCircle.addEventListener('click', function(e) {
             const task = projectsObj.getProject(currentIndex).getTask(e.target.dataset.taskIndex);
-            console.log(task.getCompleted());
             task.setCompleted();
-            console.log(task.getCompleted());
             updateDisplay((projectsObj.getProjects()), currentIndex);
         })
     })

@@ -1,4 +1,6 @@
 import { addListeners } from "./listeners";
+import { format } from "date-fns";
+
 
 export function updateDisplay(projects, index) {
     const projectsDisplay = document.querySelector('.projects');
@@ -48,10 +50,8 @@ export function updateDisplay(projects, index) {
         deleteButton.dataset.taskIndex = taskIndex;
         taskCircle.dataset.taskIndex = taskIndex;
 
-
-
         taskTitle.textContent = task.title;
-        dueDate.textContent = `Due ${task.dueDate}`;
+        dueDate.textContent = `Due ${format(new Date(task.dueDate.replace(/-/g, '/')), "MM/dd/yyyy")}`;
         editButton.textContent = 'View/Edit';
         deleteButton.textContent = 'Delete';
 
