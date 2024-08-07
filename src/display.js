@@ -39,9 +39,15 @@ export function updateDisplay(projects, index) {
         
         taskDiv.classList.add('task');
         taskCircle.classList.add('circle');
+        if (task.getCompleted()) {
+            taskCircle.classList.add('completed');
+            taskCircle.textContent = '✓';
+        }
         editButton.classList.add('edit');
         deleteButton.classList.add('delete-task');
         deleteButton.dataset.taskIndex = taskIndex;
+        taskCircle.dataset.taskIndex = taskIndex;
+
 
 
         taskTitle.textContent = task.title;

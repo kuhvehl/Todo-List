@@ -14,20 +14,34 @@ if (currentIndex === undefined) {
 export function addListeners() {
     const addTaskButton = document.querySelector('.add-task')
     const newTaskDialog = document.querySelector('.task-dialog');
+    const taskCircles = document.querySelectorAll('.circle');
+    const deleteTaskButtons = document.querySelectorAll('.delete-task')
     const taskTitle = document.querySelector('#title');
     const due = document.querySelector('#due');
+
     addTaskButton.addEventListener('click', openTaskDialogue);
+
     if (!taskCloseListening) {
         newTaskDialog.addEventListener('close', closeTaskDialog);
         taskCloseListening = true;
     }
-    const deleteTaskButtons = document.querySelectorAll('.delete-task')
+
     deleteTaskButtons.forEach((deleteButton => {
         deleteButton.addEventListener('click', function(e) {
             projectsObj.getProject(currentIndex).deleteTask(e.target.dataset.taskIndex);
             updateDisplay((projectsObj.getProjects()), currentIndex);
         })
     }))
+
+    taskCircles.forEach(taskCircle => {
+        taskCircle.addEventListener('click', function(e) {
+            const task = projectsObj.getProject(currentIndex).getTask(e.target.dataset.taskIndex);
+            console.log(task.getCompleted());
+            task.setCompleted();
+            console.log(task.getCompleted());
+            updateDisplay((projectsObj.getProjects()), currentIndex);
+        })
+    })
 
 
 
