@@ -4,23 +4,31 @@ export function updateDisplay(projects, index) {
     const projectsDisplay = document.querySelector('.projects');
     const tasksDisplay = document.querySelector('.tasks');
 
-    // console.log(currentProjectsObj);
-
     projectsDisplay.innerHTML = '';
     tasksDisplay.innerHTML = '';
 
     projects.forEach((project, projectIndex) => {
         const projectButton = document.createElement('div');
+        const projectTitle = document.createElement('div');
+        projectTitle.dataset.projectIndex = projectIndex;
+        projectTitle.textContent = project.title; 
         projectButton.dataset.projectIndex = projectIndex;
+
+        projectButton.appendChild(projectTitle);
+
         if (index == projectIndex) {
             projectButton.classList.add('current-project', 'project');
+            const deleteProject = document.createElement('div');
+            deleteProject.classList.add('delete-project');
+            deleteProject.textContent = 'Delete';
+            projectButton.appendChild(deleteProject);
         } else {
             projectButton.classList.add('project');
         }
-        projectButton.textContent = project.title;  
         projectsDisplay.appendChild(projectButton);
     })
 
+    if (index !== undefined) {
     projects[index].getTasks().forEach((task, taskIndex) => {
         const taskDiv = document.createElement('div');
         const taskCircle = document.createElement('div');
@@ -48,6 +56,7 @@ export function updateDisplay(projects, index) {
         taskDiv.appendChild(deleteButton);
         tasksDisplay.appendChild(taskDiv);
     });
+}
 
     addListeners();
 }

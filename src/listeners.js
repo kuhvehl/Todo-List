@@ -7,7 +7,7 @@ let taskCloseListening;
 let projectCloseListening;
 
 let currentIndex;
-if (!currentIndex) {
+if (currentIndex === undefined) {
     currentIndex = 0;
 }
 
@@ -32,6 +32,7 @@ export function addListeners() {
 
 
     const addProjectButton = document.querySelector('.add-project')
+    const deleteProjectButton = document.querySelector('.delete-project');
     const projectDialog = document.querySelector('.project-dialog');
     const projectTitle = document.querySelector('#project-title')
     const projectDivs = document.querySelectorAll('.project')
@@ -40,6 +41,14 @@ export function addListeners() {
         projectDialog.addEventListener('close', closeProjectDialogue);
         projectCloseListening = true;
     }
+    
+    if (projectsObj.getProjects().length > 0 && deleteProjectButton !== null) {
+        deleteProjectButton.addEventListener('click', function() {
+            projectsObj.deleteProject(currentIndex);
+            updateDisplay((projectsObj.getProjects()));
+        })
+    }
+
 
     projectDivs.forEach((div) => {
         div.addEventListener('click', function(e) {
