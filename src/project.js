@@ -17,5 +17,9 @@ export function createProject(title) {
         tasks.splice(i, 1);
     }
 
-    return { title, addTask, getTasks, getTask, deleteTask };
+    function updateTask (i, updatedTask) {
+        tasks.splice(i, 1, updatedTask);
+    }
+
+    return { title, addTask, getTasks, getTask, deleteTask, updateTask };
 }
