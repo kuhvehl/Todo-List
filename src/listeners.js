@@ -3,27 +3,41 @@ import { createProject } from "./project";
 import { updateDisplay } from "./display";
 import { createListItem } from "./listItem";
 
+let taskCloseListening;
+let projectCloseListening;
+
+let currentIndex;
+if (!currentIndex) {
+    currentIndex = 0;
+}
+
 export function addListeners() {
     const addTaskButton = document.querySelector('.add-task')
-    const newTask = document.querySelector('.task-dialog');
+    const newTaskDialog = document.querySelector('.task-dialog');
     const taskTitle = document.querySelector('#title');
     const due = document.querySelector('#due');
     addTaskButton.addEventListener('click', openTaskDialogue);
+    if (!taskCloseListening) {
+        newTaskDialog.addEventListener('close', closeTaskDialog);
+        taskCloseListening = true;
+    }
+
 
     const addProjectButton = document.querySelector('.add-project')
     const projectDialog = document.querySelector('.project-dialog');
     const projectTitle = document.querySelector('#project-title')
     const projectDivs = document.querySelectorAll('.project')
     addProjectButton.addEventListener('click', openProjectDialogue);
-    projectDialog.addEventListener('close', closeProjectDialogue);
 
-    let currentIndex;
+    if (!projectCloseListening) {
+        projectDialog.addEventListener('close', closeProjectDialogue);
+        projectCloseListening = true;
+    }
 
     projectDivs.forEach((div) => {
         div.addEventListener('click', function(e) {
             currentIndex = e.target.dataset.projectIndex;
             console.log(currentIndex);
-            projectDialog.removeEventListener('close', closeProjectDialogue);
             updateDisplay((projectsObj.getProjects()), e.target.dataset.projectIndex);
         })
     })
@@ -39,7 +53,6 @@ export function addListeners() {
             projectsObj.addProject(newProject);
             currentIndex = projectsObj.getProjects().length - 1;
             console.log(currentIndex)
-            projectDialog.removeEventListener('close', closeProjectDialogue);
             updateDisplay((projectsObj.getProjects()), currentIndex);
         }
     }
@@ -47,17 +60,18 @@ export function addListeners() {
     function openTaskDialogue() {
         taskTitle.value = ''
         due.value = ''
-        newTask.showModal();
+        newTaskDialog.showModal();
     }
     
-    function closeDialog() {
-        if (newTask.returnValue === 'submit') {
-            const newTask = title.value;
-            const newDueDate = due.value;
-    
-            const newListItem = createListItem(newTask, newDueDate);
-
-            updateProjectsDisplay([testProject, anotherTestProject], 0)
+    function closeTaskDialog() {
+        if (newTaskDialog.returnValue === 'submit') {
+            let newTask = title.value;
+            let newDueDate = due.value;
+            let newListItem = createListItem(newTask, newDueDate);
+            console.log(currentIndex);
+            console.log(projectsObj.getProject(0));
+            projectsObj.getProject(currentIndex).addTask(newListItem);
+            updateDisplay((projectsObj.getProjects()), currentIndex)
         }
     }
 }
