@@ -69,13 +69,15 @@ export function addListeners() {
         if (newTaskDialog.returnValue === 'submit') {
             let newTask = title.value;
             let newDueDate = due.value;
-            let newListItem = createListItem(newTask, newDueDate);
             console.log(viewEditTaskIndex);
             if (viewEditTaskIndex) {
+                let completed = projectsObj.getProject(currentIndex).getTask(viewEditTaskIndex).getCompleted();
+                let newListItem = createListItem(newTask, newDueDate, completed);
                 projectsObj.getProject(currentIndex).updateTask(viewEditTaskIndex, newListItem); 
                 updateDisplay((projectsObj.getProjects()), currentIndex)
                 viewEditTaskIndex = false;
             } else {
+                let newListItem = createListItem(newTask, newDueDate);
                 projectsObj.getProject(currentIndex).addTask(newListItem);
                 updateDisplay((projectsObj.getProjects()), currentIndex)
             }
