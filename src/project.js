@@ -1,4 +1,6 @@
-export function createProject(title) {
+export function createProject(projectTitle) {
+    let title = projectTitle;
+    
     const tasks = [];
 
     function getTasks() {
@@ -21,5 +23,9 @@ export function createProject(title) {
         tasks.splice(i, 1, updatedTask);
     }
 
-    return { title, addTask, getTasks, getTask, deleteTask, updateTask };
+    function setTitle (newTitle) {
+        title = newTitle;
+    }
+
+    return { addTask, getTasks, getTask, deleteTask, updateTask, title, setTitle };
 }

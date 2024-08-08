@@ -7,7 +7,8 @@ export function updateDisplay(projects, index) {
     const tasksDisplay = document.querySelector('.tasks');
 
     projectsDisplay.innerHTML = '';
-    tasksDisplay.innerHTML = '';
+    tasksDisplay.innerHTML = '';''
+
 
     projects.forEach((project, projectIndex) => {
         const projectButton = document.createElement('div');
@@ -20,10 +21,23 @@ export function updateDisplay(projects, index) {
 
         if (index == projectIndex) {
             projectButton.classList.add('current-project', 'project');
+            const deleteEditDiv = document.createElement('div');
             const deleteProject = document.createElement('div');
+            const editProject = document.createElement('div');
+
+            
+            deleteEditDiv.classList.add('delete-edit');
             deleteProject.classList.add('delete-project');
+            editProject.classList.add('edit-project')
+
             deleteProject.textContent = 'Delete';
-            projectButton.appendChild(deleteProject);
+            editProject.textContent = 'Edit';
+            editProject.dataset.projectIndex = projectIndex;
+
+            deleteEditDiv.appendChild(editProject);
+            deleteEditDiv.appendChild(deleteProject);
+            projectButton.appendChild(deleteEditDiv);
+
         } else {
             projectButton.classList.add('project');
         }

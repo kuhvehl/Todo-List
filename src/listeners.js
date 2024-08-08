@@ -5,6 +5,7 @@ import { createListItem } from "./listItem";
 
 let taskCloseListening;
 let projectCloseListening;
+let editProject
 let viewEditTaskIndex;
 let currentTask;
 
@@ -14,9 +15,6 @@ if (currentIndex === undefined) {
 }
 
 export function addListeners() {
-    const currentProjects = projectsObj.getProjects();
-    const currentProject = projectsObj.getProject(currentIndex);
-
     const addTaskButton = document.querySelector('.add-task')
     const newTaskDialog = document.querySelector('.task-dialog');
     const taskCircles = document.querySelectorAll('.circle');
@@ -43,22 +41,22 @@ export function addListeners() {
 
     deleteTaskButtons.forEach((deleteButton => {
         deleteButton.addEventListener('click', function(e) {
-            currentProject.deleteTask(e.target.parentElement.dataset.taskIndex);
-            updateDisplay(currentProjects, currentIndex);
+            projectsObj.getProject(currentIndex).deleteTask(e.target.parentElement.dataset.taskIndex);
+            updateDisplay(projectsObj.getProjects(), currentIndex);
         })
     }))
 
     taskCircles.forEach(taskCircle => {
         taskCircle.addEventListener('click', function(e) {
-            const task = currentProject.getTask(e.target.parentElement.dataset.taskIndex);
+            const task = projectsObj.getProject(currentIndex).getTask(e.target.parentElement.dataset.taskIndex);
             task.setCompleted();
-            updateDisplay(currentProjects, currentIndex);
+            updateDisplay(projectsObj.getProjects(), currentIndex);
         })
     })
 
     function openTaskDialogue() {
         if (viewEditTaskIndex) {
-            currentTask = currentProject.getTask(viewEditTaskIndex);
+            currentTask = projectsObj.getProject(currentIndex).getTask(viewEditTaskIndex);
             taskTitle.value = currentTask.title;
             due.value = currentTask.dueDate;
             description.value = currentTask.description;
@@ -98,14 +96,14 @@ export function addListeners() {
             if (viewEditTaskIndex) {
                 let completed = currentTask.getCompleted();
                 let updatedListItem = createListItem(newTask, newDueDate, newDescription, newPriority, newNotes, completed);
-                currentProject.updateTask(viewEditTaskIndex, updatedListItem); 
-                updateDisplay(currentProjects, currentIndex)
+                projectsObj.getProject(currentIndex).updateTask(viewEditTaskIndex, updatedListItem); 
+                updateDisplay(projectsObj.getProjects(), currentIndex)
                 viewEditTaskIndex = false;
                 currentTask = '';
             } else {
                 let newListItem = createListItem(newTask, newDueDate, newDescription, newPriority, newNotes);
-                currentProject.addTask(newListItem);
-                updateDisplay(currentProjects, currentIndex)
+                projectsObj.getProject(currentIndex).addTask(newListItem);
+                updateDisplay(projectsObj.getProjects(), currentIndex)
                 viewEditTaskIndex = false;
                 currentTask = '';
             }
@@ -116,6 +114,7 @@ export function addListeners() {
 
     const addProjectButton = document.querySelector('.add-project')
     const deleteProjectButton = document.querySelector('.delete-project');
+    const editProjectButton = document.querySelector('.edit-project');
     const projectDialog = document.querySelector('.project-dialog');
     const projectTitle = document.querySelector('#project-title')
     const projectDivs = document.querySelectorAll('.project')
@@ -126,43 +125,53 @@ export function addListeners() {
         projectCloseListening = true;
     }
     
-    if (currentProjects.length > 0 && deleteProjectButton !== null) {
+    if (projectsObj.getProjects().length > 0 && deleteProjectButton !== null) {
         deleteProjectButton.addEventListener('click', function() {
             projectsObj.deleteProject(currentIndex);
-            updateDisplay(currentProjects);
+            updateDisplay(projectsObj.getProjects());
+        })
+    }
+
+    if (projectsObj.getProjects().length > 0 && editProjectButton !== null) {
+        editProjectButton.addEventListener('click', function(e) {
+            e.stopPropagation();
+            editProject = e.target.dataset.projectIndex;
+            updateDisplay(projectsObj.getProjects(), currentIndex);
+            openProjectDialogue();
         })
     }
 
     projectDivs.forEach((div) => {
         div.addEventListener('click', function(e) {
-            currentIndex = e.target.dataset.projectIndex;
-            updateDisplay(currentProjects, e.target.dataset.projectIndex);
+            currentIndex = Number(e.target.dataset.projectIndex);
+            updateDisplay(projectsObj.getProjects(), currentIndex);
         })
     })
 
     function openProjectDialogue() {
-        projectTitle.value = ''
-        projectDialog.showModal();
+        if (editProject) {
+            projectTitle.value = projectsObj.getProject(currentIndex).title;
+            projectDialog.showModal();
+        } else {
+            projectTitle.value = ''
+            projectDialog.showModal();
+        }
     }
 
     function closeProjectDialogue() {
         if (projectDialog.returnValue === 'submit') {
-            let newProject = createProject(projectTitle.value);
-            projectsObj.addProject(newProject);
-            currentIndex = currentProjects.length - 1;
-            updateDisplay(currentProjects, currentIndex);
+            const newProjectTitle = projectTitle.value;
+            if (editProject) {
+                projectsObj.projects[currentIndex].title = newProjectTitle;
+                updateDisplay(projectsObj.getProjects(), currentIndex);
+                editProject = false
+            } else {
+                let newProject = createProject(newProjectTitle);
+                projectsObj.addProject(newProject);
+                currentIndex = projectsObj.getProjects().length - 1;
+                updateDisplay(projectsObj.getProjects(), currentIndex);
+            }
+            editProject = false;    
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-// this.clearBooks();
-// this.displayBooks();

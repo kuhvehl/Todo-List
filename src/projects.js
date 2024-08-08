@@ -19,7 +19,11 @@ export const projectsObj = (function projects() {
         projects.splice(i, 1);
     }
 
-    return { getProjects, getProject, addProject, deleteProject };
+    function updateProject (i, updatedProject) {
+        projects.splice(i, 1, updatedProject);
+    }
+
+    return { getProjects, getProject, addProject, deleteProject, updateProject, projects };
 })();
 
 const defaultProject = createProject('Default Project');
