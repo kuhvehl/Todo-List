@@ -44,15 +44,16 @@ export function updateDisplay(projects, index) {
         if (task.getCompleted()) {
             taskCircle.classList.add('completed');
             taskCircle.textContent = '✓';
+            taskTitle.classList.add('completed');
         }
         editButton.classList.add('edit-task');
         deleteButton.classList.add('delete-task');
-        deleteButton.dataset.taskIndex = taskIndex;
-        taskCircle.dataset.taskIndex = taskIndex;
-        editButton.dataset.taskIndex = taskIndex;
+        taskDiv.dataset.taskIndex = taskIndex;
 
         taskTitle.textContent = task.title;
-        dueDate.textContent = `Due ${format(new Date(task.dueDate.replace(/-/g, '/')), "MM/dd/yyyy")}`;
+        if (task.dueDate) {
+            dueDate.textContent = `Due ${format(new Date(task.dueDate.replace(/-/g, '/')), "MM/dd/yyyy")}`;
+        }
         editButton.textContent = 'View/Edit';
         deleteButton.textContent = 'Delete';
 

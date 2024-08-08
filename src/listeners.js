@@ -33,21 +33,21 @@ export function addListeners() {
     
     editTaskButtons.forEach((editButton => {
         editButton.addEventListener('click', function(e) {
-            viewEditTaskIndex = e.target.dataset.taskIndex;
+            viewEditTaskIndex = e.target.parentElement.dataset.taskIndex;
             openTaskDialogue();
         })
     }))
 
     deleteTaskButtons.forEach((deleteButton => {
         deleteButton.addEventListener('click', function(e) {
-            currentProject.deleteTask(e.target.dataset.taskIndex);
+            currentProject.deleteTask(e.target.parentElement.dataset.taskIndex);
             updateDisplay(currentProjects, currentIndex);
         })
     }))
 
     taskCircles.forEach(taskCircle => {
         taskCircle.addEventListener('click', function(e) {
-            const task = currentProject.getTask(e.target.dataset.taskIndex);
+            const task = currentProject.getTask(e.target.parentElement.dataset.taskIndex);
             task.setCompleted();
             updateDisplay(currentProjects, currentIndex);
         })
