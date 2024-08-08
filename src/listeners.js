@@ -24,6 +24,9 @@ export function addListeners() {
     const deleteTaskButtons = document.querySelectorAll('.delete-task')
     const taskTitle = document.querySelector('#title');
     const due = document.querySelector('#due');
+    const description = document.querySelector('#description');
+    const priority = document.querySelectorAll('input[name="priority');
+    const notes = document.querySelector('#notes');
     addTaskButton.addEventListener('click', openTaskDialogue);
 
     if (!taskCloseListening) {
@@ -58,10 +61,28 @@ export function addListeners() {
             currentTask = currentProject.getTask(viewEditTaskIndex);
             taskTitle.value = currentTask.title;
             due.value = currentTask.dueDate;
+            description.value = currentTask.description;
+            priority.forEach(priority => {
+                if (priority.value === currentTask.priority) {
+                    priority.checked = true;
+                } else {
+                    priority.checked = false;
+                }
+            })
+            notes.value = currentTask.notes;
             newTaskDialog.showModal();
         } else {
             taskTitle.value = ''
             due.value = ''
+            description.value = '';
+            priority.forEach(priority => {
+                if (priority.value === 'low') {
+                    priority.checked = true;
+                } else {
+                    priority.checked = false;
+                }
+            })
+            notes.value = '';
             newTaskDialog.showModal();
         }
     }
@@ -70,19 +91,27 @@ export function addListeners() {
         if (newTaskDialog.returnValue === 'submit') {
             let newTask = title.value;
             let newDueDate = due.value;
+            let newDescription = description.value;
+            let newPriority = document.querySelector('input[name="priority"]:checked').value;
+            let newNotes = notes.value;
+
             if (viewEditTaskIndex) {
                 let completed = currentTask.getCompleted();
-                let updatedListItem = createListItem(newTask, newDueDate, completed);
+                let updatedListItem = createListItem(newTask, newDueDate, newDescription, newPriority, newNotes, completed);
                 currentProject.updateTask(viewEditTaskIndex, updatedListItem); 
                 updateDisplay(currentProjects, currentIndex)
                 viewEditTaskIndex = false;
                 currentTask = '';
             } else {
-                let newListItem = createListItem(newTask, newDueDate);
+                let newListItem = createListItem(newTask, newDueDate, newDescription, newPriority, newNotes);
                 currentProject.addTask(newListItem);
                 updateDisplay(currentProjects, currentIndex)
+                viewEditTaskIndex = false;
+                currentTask = '';
             }
         }
+        viewEditTaskIndex = false;
+        currentTask = '';
     }
 
     const addProjectButton = document.querySelector('.add-project')
