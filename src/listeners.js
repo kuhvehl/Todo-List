@@ -6,7 +6,7 @@ import { createListItem } from "./listItem";
 let taskCloseListening;
 let projectCloseListening;
 let viewEditTaskIndex;
-
+let currentTask;
 
 let currentIndex;
 if (currentIndex === undefined) {
@@ -14,6 +14,9 @@ if (currentIndex === undefined) {
 }
 
 export function addListeners() {
+    const currentProjects = projectsObj.getProjects();
+    const currentProject = projectsObj.getProject(currentIndex);
+
     const addTaskButton = document.querySelector('.add-task')
     const newTaskDialog = document.querySelector('.task-dialog');
     const taskCircles = document.querySelectorAll('.circle');
@@ -31,7 +34,6 @@ export function addListeners() {
     
     editTaskButtons.forEach((editButton => {
         editButton.addEventListener('click', function(e) {
-            console.log(e.target.dataset.taskIndex);
             viewEditTaskIndex = e.target.dataset.taskIndex;
             openTaskDialogue();
         })
@@ -39,47 +41,47 @@ export function addListeners() {
 
     deleteTaskButtons.forEach((deleteButton => {
         deleteButton.addEventListener('click', function(e) {
-            projectsObj.getProject(currentIndex).deleteTask(e.target.dataset.taskIndex);
-            updateDisplay((projectsObj.getProjects()), currentIndex);
+            currentProject.deleteTask(e.target.dataset.taskIndex);
+            updateDisplay(currentProjects, currentIndex);
         })
     }))
 
     taskCircles.forEach(taskCircle => {
         taskCircle.addEventListener('click', function(e) {
-            const task = projectsObj.getProject(currentIndex).getTask(e.target.dataset.taskIndex);
+            const task = currentProject.getTask(e.target.dataset.taskIndex);
             task.setCompleted();
-            updateDisplay((projectsObj.getProjects()), currentIndex);
+            updateDisplay(currentProjects, currentIndex);
         })
     })
 
     function openTaskDialogue() {
         if (viewEditTaskIndex) {
-            const currentTask = projectsObj.getProject(currentIndex).getTask(viewEditTaskIndex);
+            currentTask = currentProject.getTask(viewEditTaskIndex);
             taskTitle.value = currentTask.title;
             due.value = currentTask.dueDate;
             newTaskDialog.showModal();
         } else {
-        taskTitle.value = ''
-        due.value = ''
-        newTaskDialog.showModal();
-    }
+            taskTitle.value = ''
+            due.value = ''
+            newTaskDialog.showModal();
+        }
     }
     
     function closeTaskDialog() {
         if (newTaskDialog.returnValue === 'submit') {
             let newTask = title.value;
             let newDueDate = due.value;
-            console.log(viewEditTaskIndex);
             if (viewEditTaskIndex) {
-                let completed = projectsObj.getProject(currentIndex).getTask(viewEditTaskIndex).getCompleted();
-                let newListItem = createListItem(newTask, newDueDate, completed);
-                projectsObj.getProject(currentIndex).updateTask(viewEditTaskIndex, newListItem); 
-                updateDisplay((projectsObj.getProjects()), currentIndex)
+                let completed = currentTask.getCompleted();
+                let updatedListItem = createListItem(newTask, newDueDate, completed);
+                currentProject.updateTask(viewEditTaskIndex, updatedListItem); 
+                updateDisplay(currentProjects, currentIndex)
                 viewEditTaskIndex = false;
+                currentTask = '';
             } else {
                 let newListItem = createListItem(newTask, newDueDate);
-                projectsObj.getProject(currentIndex).addTask(newListItem);
-                updateDisplay((projectsObj.getProjects()), currentIndex)
+                currentProject.addTask(newListItem);
+                updateDisplay(currentProjects, currentIndex)
             }
         }
     }
