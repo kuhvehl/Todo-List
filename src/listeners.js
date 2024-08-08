@@ -24,7 +24,6 @@ export function addListeners() {
     const deleteTaskButtons = document.querySelectorAll('.delete-task')
     const taskTitle = document.querySelector('#title');
     const due = document.querySelector('#due');
-
     addTaskButton.addEventListener('click', openTaskDialogue);
 
     if (!taskCloseListening) {
@@ -92,6 +91,7 @@ export function addListeners() {
     const projectTitle = document.querySelector('#project-title')
     const projectDivs = document.querySelectorAll('.project')
     addProjectButton.addEventListener('click', openProjectDialogue);
+
     if (!projectCloseListening) {
         projectDialog.addEventListener('close', closeProjectDialogue);
         projectCloseListening = true;

@@ -7,5 +7,5 @@ export function createListItem(title, dueDate, completed = false, description, p
         return completed;
     }
 
-    return { title, dueDate, description, priority, notes, checkList, getCompleted, setCompleted };
+    return { title, dueDate, description, priority, notes, getCompleted, setCompleted };
 }
