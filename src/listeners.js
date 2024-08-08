@@ -97,17 +97,17 @@ export function addListeners() {
         projectCloseListening = true;
     }
     
-    if (projectsObj.getProjects().length > 0 && deleteProjectButton !== null) {
+    if (currentProjects.length > 0 && deleteProjectButton !== null) {
         deleteProjectButton.addEventListener('click', function() {
             projectsObj.deleteProject(currentIndex);
-            updateDisplay((projectsObj.getProjects()));
+            updateDisplay(currentProjects);
         })
     }
 
     projectDivs.forEach((div) => {
         div.addEventListener('click', function(e) {
             currentIndex = e.target.dataset.projectIndex;
-            updateDisplay((projectsObj.getProjects()), e.target.dataset.projectIndex);
+            updateDisplay(currentProjects, e.target.dataset.projectIndex);
         })
     })
 
@@ -120,8 +120,8 @@ export function addListeners() {
         if (projectDialog.returnValue === 'submit') {
             let newProject = createProject(projectTitle.value);
             projectsObj.addProject(newProject);
-            currentIndex = projectsObj.getProjects().length - 1;
-            updateDisplay((projectsObj.getProjects()), currentIndex);
+            currentIndex = currentProjects.length - 1;
+            updateDisplay(currentProjects, currentIndex);
         }
     }
 }
