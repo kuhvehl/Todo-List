@@ -77,6 +77,22 @@
     margin-bottom: 3rem;
   }
 
+  .low {
+    background-color: lightgrey
+  }
+
+  .normal {
+    background-color: transparent;
+  }
+
+  .high {
+    background-color: greenyellow;
+  }
+
+  .completed .task-title {
+    text-decoration: line-through;
+  }
+
   .projects>div:hover {
     font-weight: bolder;
     color: greenyellow;
@@ -179,7 +195,7 @@
   }
 
   input[type=radio] {
-    accent-color: yellowgreen;
+    accent-color: greenyellow;
 }
 
   .task {

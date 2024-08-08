@@ -54,6 +54,21 @@ export function updateDisplay(projects, index) {
         const deleteButton = document.createElement('button');
         
         taskDiv.classList.add('task');
+
+        if (task.priority === 'low') {
+            taskDiv.classList.add('low')
+        } else if (task.priority === 'normal') {
+            taskDiv.classList.add('normal')
+        } else {
+            taskDiv.classList.add('high');
+        }
+
+        if (task.getCompleted()) {
+            taskDiv.classList.add('completed');
+        }
+
+        taskTitle.classList.add('task-title');
+
         taskCircle.classList.add('circle');
         if (task.getCompleted()) {
             taskCircle.classList.add('completed');
