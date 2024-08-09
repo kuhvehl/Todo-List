@@ -1,79 +1,281 @@
-@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap');
+*, *::before, *::after {
+    box-sizing: border-box;
+  }
+  * {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  body {
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+  }
+  input, button, textarea, select {
+    font: inherit;
+  }
+  p, h1, h2, h3, h4, h5, h6 {
+    overflow-wrap: break-word;
+  }
+  #root, #__next {
+    isolation: isolate;
+  }
 
-* {
-    font-family: 'Comic Neue', cursive;
-}
+  body {
+    height: 100vh;
+  }
 
-body {
+  .container {
     display: grid;
-    padding: 20px;
+    grid-template-columns: minmax(200px, 1fr) 3fr;
+    grid-template-areas: 
+    'header header'
+    'sidebar main';
     background-color: white;
-    justify-items: center;
-}
+  }
 
-.main-container {
+  .header {
+    grid-area: header;
+    background-color: black;
+    color: greenyellow;
+    padding: 1rem;
+  }
+
+  .sidebar {
+    grid-area: sidebar;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    justify-items: center;
-}
+    padding: 1rem;
+    grid-template-rows: .25fr 2fr .25fr;
+  }
 
-.projects-container {
+  .sidebar .project-buttons {
     display: grid;
-    grid-template-rows: .25fr 1fr 1fr 1fr;
-}
+    grid-template-rows: 1fr 1fr;
+    gap: 1rem;
+  }
 
-#new-project-form {
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-.tasks-container {
+  .main {
+    grid-area: main;
     display: grid;
-    grid-template-rows: .25fr 1fr 1fr 1fr;
-}
+    padding: 1rem;
+    grid-template-rows: .25fr 2fr .25fr;
+  }
 
-#addTaskForm {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin: 10px;
-}
+  .projects {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 3rem;
+    gap: 1rem;
+  }
 
-.selected-project {
+  .tasks {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  .low {
+    background-color: lightgrey
+  }
+
+  .normal {
+    background-color: transparent;
+  }
+
+  .high {
+    background-color: greenyellow;
+  }
+
+  .completed .task-title {
+    text-decoration: line-through;
+    font-style: italic;
+  }
+
+  .projects>div:hover {
+    font-weight: bolder;
+    color: greenyellow;
+    background-color: black;
+    border-radius: 5px;
+    padding-left: 1rem;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;  
+  }
+
+  .project {
+    display: flex;
+    flex-direction: column;
+    justify-items: start;
+    align-items: start;
+  }
+
+  .delete-edit {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .delete-project, .edit-project {
+    font-size: 1.5ch;
+  }
+
+  .edit-project:hover {
+    font-style: italic;
+  }
+
+  .delete-project:hover {
+    border-radius: 5px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .current-project {
+    font-weight: bolder;
+    color: black;
+    background-color: greenyellow;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    border-radius: 5px;
+  }
+
+  .projects .current-project:hover {
+    font-weight: bolder;
+    color: black;
+    background-color: greenyellow;
+    padding-left: 1rem;
+    border-radius: 5px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;  
+  }
+
+  h2 {
+    margin-bottom: 1rem;
+  }
+
+  button {
+    border: none;
+    background-color: transparent;
+    border: 1px black solid;
+    padding: 1rem;
+    text-align: center;
+    border-radius: 5px;
+  }
+
+  button:hover, button.submit:hover {
+    background-color: greenyellow;
+    border: none;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;  
+  }
+
+  button.delete-task:hover, button.cancel:hover, .delete-project:hover {
+    background-color: red;
     color: white;
-    background-color: green;
+  }
+
+  button.cancel:focus {
+    outline: black;
+  }
+
+  input {
+    padding-left: .25rem;
+    border-radius: 5px;
+    border: none;
+  }
+
+  input:focus, textarea:focus {
+    outline: greenyellow;
+    border: black 2px solid;
+  }
+
+  .priority-input, .priority-input>div {
+    display: flex;
+    justify-content: center;
+    gap: .25rem;
+  }
+
+  input[type=radio] {
+    accent-color: greenyellow;
 }
 
-.high {
-    background-color: #66FF00;
-}
-
-.normal {
-    background-color: #4FFFB0;
-}
-
-.low {
-    background-color: #ACE1AF;
-}
-
-.delete-project {
-    height: 20px;
-}
-
-.submit-button {
-    height: 20px;
-}
-
-#editTaskForm {
+  .task {
     display: grid;
-    gap: 5px;
-    margin-bottom: 100px;
-}
+    grid-template-columns: .1fr 1fr 1fr 1fr 1fr;
+    width: 100%;
+    align-items: center;
+    column-gap: 1rem;
+    border: 1px black solid;
+    padding: 1rem;
+    border-radius: 5px;
+  }
 
-.edit-task {
-    margin-right: 10px;
-}
+  .circle {
+    height: 30px;
+    width: 30px;
+    background-color: transparent;
+    border-radius: 50%;
+    border: solid 2px black;
+  }
 
-.taskFormHeading {
-    margin: 0px;
-}
+  .circle:hover {
+    background-color: greenyellow;
+  }
+
+  .circle.completed {
+    background-color: greenyellow;
+    color: black;
+    display: grid;
+    place-content: center;
+    padding: 1ch;
+    font-size: 2.5ch;
+  }
+
+  dialog[open] {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 350px;
+    max-width: 100%;
+    display: grid;
+    gap: .5rem;
+    background-color: rgb(235, 235, 235);
+    border-radius: 10px;
+    border: none;
+    z-index: 1;
+  }
+
+  dialog form {
+    display: grid;
+    gap: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  dialog form div {
+    width: 100%;
+    display: grid;
+    row-gap: .25rem;
+    grid-template-columns: .35fr 1fr;
+    align-items: center;
+  }
+
+  .description-input, .notes-input {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  textarea {
+    resize: none;
+    padding-left: .25rem;
+    border-radius: 5px;
+    border: none;
+  }
+
+  ::backdrop {
+    background-color: black;
+  }
+
