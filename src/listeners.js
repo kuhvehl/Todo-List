@@ -1,4 +1,3 @@
-// import { projectsObj } from "./projects";
 import { createProject } from "./project";
 import { updateDisplay } from "./display";
 import { createListItem } from "./listItem";

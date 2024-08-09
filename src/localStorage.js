@@ -7,18 +7,18 @@ export function addToLocalStorage(todos) {
 }
 
 export function getFromLocalStorage() {
-  if (!localStorage.getItem('todos') || ((JSON.parse(localStorage.getItem('todos')).projects.length) === 0)) {
+  const localProjects = JSON.parse(localStorage.getItem('todos'));
+
+  if (!localStorage.getItem('todos') || ((localProjects.projects.length) === 0)) {
     const defaultProject = createProject('Default Project');
     projectsObj.addProject(defaultProject);
     return projectsObj;
   }
 
-  const localProjects = JSON.parse(localStorage.getItem('todos'));
   localProjects.getProjects = projectsObj.getProjects;
   localProjects.getProject = projectsObj.getProject;
   localProjects.deleteProject = projectsObj.deleteProject;
   localProjects.addProject = projectsObj.addProject;
-
 
   localProjects.projects.forEach((project) => {
     project.addTask = projectObj.addTask;
@@ -26,7 +26,6 @@ export function getFromLocalStorage() {
     project.getTask = projectObj.getTask;
     project.updateTask = projectObj.updateTask;
     project.deleteTask = projectObj.deleteTask;
-
 
     project.tasks.forEach((task) => {
       task.getCompleted = listObj.getCompleted;

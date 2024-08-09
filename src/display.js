@@ -1,14 +1,12 @@
 import { addListeners } from "./listeners";
 import { format } from "date-fns";
 
-
 export function updateDisplay(projects, index) {
     const projectsDisplay = document.querySelector('.projects');
     const tasksDisplay = document.querySelector('.tasks');
 
     projectsDisplay.innerHTML = '';
-    tasksDisplay.innerHTML = '';''
-
+    tasksDisplay.innerHTML = '';
 
     projects.forEach((project, projectIndex) => {
         const projectButton = document.createElement('div');
@@ -24,7 +22,6 @@ export function updateDisplay(projects, index) {
             const deleteEditDiv = document.createElement('div');
             const deleteProject = document.createElement('div');
             const editProject = document.createElement('div');
-
             
             deleteEditDiv.classList.add('delete-edit');
             deleteProject.classList.add('delete-project');
@@ -44,7 +41,7 @@ export function updateDisplay(projects, index) {
         projectsDisplay.appendChild(projectButton);
     })
 
-    if (index) {
+    if (index || index === 0) {
         projects[index].getTasks().forEach((task, taskIndex) => {
             const taskDiv = document.createElement('div');
             const taskCircle = document.createElement('div');

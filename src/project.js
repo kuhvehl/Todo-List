@@ -24,7 +24,7 @@ export function createProject(projectTitle) {
     }
 
     function setTitle (newTitle) {
-        title = newTitle;
+        this.title = newTitle;
     }
 
     return { addTask, getTasks, getTask, deleteTask, updateTask, setTitle, title, tasks };
