@@ -1,5 +1,13 @@
 import './style.css';
 import { updateDisplay } from './display';
-import { projectsObj } from './projects';
+import { getFromLocalStorage } from './localStorage';
+import { addListeners } from './listeners';
 
-updateDisplay(projectsObj.getProjects(), 0);
+export const projectsStart = getFromLocalStorage()
+
+if (projectsStart.getProjects().length > 0) {
+updateDisplay(projectsStart.getProjects(), 0);
+} else {
+    addListeners();
+}
+

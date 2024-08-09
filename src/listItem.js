@@ -1,11 +1,14 @@
-export function createListItem(title, dueDate, description, priority = 'low', notes, completed = false) {
+export function createListItem(title, dueDate, description, priority = 'low', notes, completed = false) {    
+    
     function setCompleted() {
-        completed ? completed = false : completed = true;
+        this.completed = !this.completed;
     }
 
     function getCompleted() {
-        return completed;
+        return this.completed;
     }
 
-    return { title, dueDate, description, priority, notes, getCompleted, setCompleted };
+    return { title, dueDate, description, priority, notes, completed, getCompleted, setCompleted };
 }
+
+export const listObj = createListItem()

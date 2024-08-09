@@ -44,56 +44,56 @@ export function updateDisplay(projects, index) {
         projectsDisplay.appendChild(projectButton);
     })
 
-    if (index !== undefined) {
-    projects[index].getTasks().forEach((task, taskIndex) => {
-        const taskDiv = document.createElement('div');
-        const taskCircle = document.createElement('div');
-        const taskTitle = document.createElement('div');
-        const dueDate = document.createElement('div');
-        const editButton = document.createElement('button');
-        const deleteButton = document.createElement('button');
-        
-        taskDiv.classList.add('task');
-
-        if (task.priority === 'low') {
-            taskDiv.classList.add('low')
-        } else if (task.priority === 'normal') {
-            taskDiv.classList.add('normal')
-        } else {
-            taskDiv.classList.add('high');
-        }
-
-        if (task.getCompleted()) {
-            taskDiv.classList.add('completed');
-        }
-
-        taskTitle.classList.add('task-title');
-
-        taskCircle.classList.add('circle');
-        if (task.getCompleted()) {
-            taskCircle.classList.add('completed');
-            taskCircle.textContent = '✓';
-            taskTitle.classList.add('completed');
-        }
-        editButton.classList.add('edit-task');
-        deleteButton.classList.add('delete-task');
-        taskDiv.dataset.taskIndex = taskIndex;
-
-        taskTitle.textContent = task.title;
-        if (task.dueDate) {
-            dueDate.textContent = `Due ${format(new Date(task.dueDate.replace(/-/g, '/')), "MM/dd/yyyy")}`;
-        }
-        editButton.textContent = 'View/Edit';
-        deleteButton.textContent = 'Delete';
-
-        taskDiv.appendChild(taskCircle);
-        taskDiv.appendChild(taskTitle);
-        taskDiv.appendChild(dueDate);
-        taskDiv.appendChild(editButton);
-        taskDiv.appendChild(deleteButton);
-        tasksDisplay.appendChild(taskDiv);
-    });
-}
-
+    if (index) {
+        projects[index].getTasks().forEach((task, taskIndex) => {
+            const taskDiv = document.createElement('div');
+            const taskCircle = document.createElement('div');
+            const taskTitle = document.createElement('div');
+            const dueDate = document.createElement('div');
+            const editButton = document.createElement('button');
+            const deleteButton = document.createElement('button');
+            
+            taskDiv.classList.add('task');
+            if (task.priority === 'low') {
+                taskDiv.classList.add('low')
+            } else if (task.priority === 'normal') {
+                taskDiv.classList.add('normal')
+            } else {
+                taskDiv.classList.add('high');
+            }
+            
+            if (task.getCompleted()) {
+                taskDiv.classList.add('completed');
+            }
+            
+            taskTitle.classList.add('task-title');
+            
+            taskCircle.classList.add('circle');
+            if (task.getCompleted()) {
+                taskCircle.classList.add('completed');
+                taskCircle.textContent = '✓';
+                taskTitle.classList.add('completed');
+            }
+            
+            editButton.classList.add('edit-task');
+            deleteButton.classList.add('delete-task');
+            taskDiv.dataset.taskIndex = taskIndex;
+            
+            taskTitle.textContent = task.title;
+            if (task.dueDate) {
+                dueDate.textContent = `Due ${format(new Date(task.dueDate.replace(/-/g, '/')), "MM/dd/yyyy")}`;
+            }
+            
+            editButton.textContent = 'View/Edit';
+            deleteButton.textContent = 'Delete';
+            
+            taskDiv.appendChild(taskCircle);
+            taskDiv.appendChild(taskTitle);
+            taskDiv.appendChild(dueDate);
+            taskDiv.appendChild(editButton);
+            taskDiv.appendChild(deleteButton);
+            tasksDisplay.appendChild(taskDiv);
+        });
+    }
     addListeners();
 }

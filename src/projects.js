@@ -1,22 +1,20 @@
-import { createProject } from "./project";
-
-export const projectsObj = (function projects() {
+export function createProjectsObj() {
     const projects = [];
 
     function getProjects() {
-        return projects;
+        return this.projects;
     }
     
     function getProject(i) {
-        return projects[i];
+        return this.projects[i];
     }
 
     function addProject(project) {
-        projects.push(project);
+        this.projects.push(project);
     }
 
     function deleteProject (i) {
-        projects.splice(i, 1);
+        this.projects.splice(i, 1);
     }
 
     function updateProject (i, updatedProject) {
@@ -24,9 +22,6 @@ export const projectsObj = (function projects() {
     }
 
     return { getProjects, getProject, addProject, deleteProject, updateProject, projects };
-})();
+};
 
-const defaultProject = createProject('Default Project');
-projectsObj.addProject(defaultProject);
-
-
+export const projectsObj = createProjectsObj();

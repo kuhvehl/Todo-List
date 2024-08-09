@@ -4,28 +4,30 @@ export function createProject(projectTitle) {
     const tasks = [];
 
     function getTasks() {
-        return tasks;
+        return this.tasks;
     }
     
     function getTask(i) {
-        return tasks[i];
+        return this.tasks[i];
     }
 
     function addTask(task) {
-        tasks.push(task);
+        this.tasks.push(task);
     }
 
     function deleteTask (i) {
-        tasks.splice(i, 1);
+        this.tasks.splice(i, 1);
     }
 
     function updateTask (i, updatedTask) {
-        tasks.splice(i, 1, updatedTask);
+        this.tasks.splice(i, 1, updatedTask);
     }
 
     function setTitle (newTitle) {
         title = newTitle;
     }
 
-    return { addTask, getTasks, getTask, deleteTask, updateTask, title, setTitle };
+    return { addTask, getTasks, getTask, deleteTask, updateTask, setTitle, title, tasks };
 }
+
+export const projectObj = createProject();

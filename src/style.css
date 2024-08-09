@@ -91,6 +91,7 @@
 
   .completed .task-title {
     text-decoration: line-through;
+    font-style: italic;
   }
 
   .projects>div:hover {

@@ -1,7 +1,11 @@
-import { projectsObj } from "./projects";
+// import { projectsObj } from "./projects";
 import { createProject } from "./project";
 import { updateDisplay } from "./display";
 import { createListItem } from "./listItem";
+import { addToLocalStorage } from "./localStorage";
+import { projectsStart as projectsObj } from ".";
+
+
 
 let taskCloseListening;
 let projectCloseListening;
@@ -42,6 +46,7 @@ export function addListeners() {
     deleteTaskButtons.forEach((deleteButton => {
         deleteButton.addEventListener('click', function(e) {
             projectsObj.getProject(currentIndex).deleteTask(e.target.parentElement.dataset.taskIndex);
+            addToLocalStorage(projectsObj);
             updateDisplay(projectsObj.getProjects(), currentIndex);
         })
     }))
@@ -50,6 +55,7 @@ export function addListeners() {
         taskCircle.addEventListener('click', function(e) {
             const task = projectsObj.getProject(currentIndex).getTask(e.target.parentElement.dataset.taskIndex);
             task.setCompleted();
+            addToLocalStorage(projectsObj);
             updateDisplay(projectsObj.getProjects(), currentIndex);
         })
     })
@@ -96,13 +102,15 @@ export function addListeners() {
             if (viewEditTaskIndex) {
                 let completed = currentTask.getCompleted();
                 let updatedListItem = createListItem(newTask, newDueDate, newDescription, newPriority, newNotes, completed);
-                projectsObj.getProject(currentIndex).updateTask(viewEditTaskIndex, updatedListItem); 
+                projectsObj.getProject(currentIndex).updateTask(viewEditTaskIndex, updatedListItem);
+                addToLocalStorage(projectsObj); 
                 updateDisplay(projectsObj.getProjects(), currentIndex)
                 viewEditTaskIndex = false;
                 currentTask = '';
             } else {
                 let newListItem = createListItem(newTask, newDueDate, newDescription, newPriority, newNotes);
                 projectsObj.getProject(currentIndex).addTask(newListItem);
+                addToLocalStorage(projectsObj);
                 updateDisplay(projectsObj.getProjects(), currentIndex)
                 viewEditTaskIndex = false;
                 currentTask = '';
@@ -128,6 +136,7 @@ export function addListeners() {
     if (projectsObj.getProjects().length > 0 && deleteProjectButton !== null) {
         deleteProjectButton.addEventListener('click', function() {
             projectsObj.deleteProject(currentIndex);
+            addToLocalStorage(projectsObj);
             updateDisplay(projectsObj.getProjects());
         })
     }
@@ -136,6 +145,7 @@ export function addListeners() {
         editProjectButton.addEventListener('click', function(e) {
             e.stopPropagation();
             editProject = e.target.dataset.projectIndex;
+            addToLocalStorage(projectsObj);
             updateDisplay(projectsObj.getProjects(), currentIndex);
             openProjectDialogue();
         })
@@ -144,6 +154,7 @@ export function addListeners() {
     projectDivs.forEach((div) => {
         div.addEventListener('click', function(e) {
             currentIndex = Number(e.target.dataset.projectIndex);
+            addToLocalStorage(projectsObj);
             updateDisplay(projectsObj.getProjects(), currentIndex);
         })
     })
@@ -163,12 +174,14 @@ export function addListeners() {
             const newProjectTitle = projectTitle.value;
             if (editProject) {
                 projectsObj.projects[currentIndex].title = newProjectTitle;
+                addToLocalStorage(projectsObj);
                 updateDisplay(projectsObj.getProjects(), currentIndex);
                 editProject = false
             } else {
                 let newProject = createProject(newProjectTitle);
                 projectsObj.addProject(newProject);
                 currentIndex = projectsObj.getProjects().length - 1;
+                addToLocalStorage(projectsObj);
                 updateDisplay(projectsObj.getProjects(), currentIndex);
             }
             editProject = false;    
