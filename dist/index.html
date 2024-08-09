@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+<script defer src="main.js"></script></head>
+<body>
+    <div class="container">
+        <dialog class="project-dialog">
+            <button class="cancel" form="newProject" value="cancel" formnovalidate>Cancel</button>
+            <form id="newProject" method="dialog">
+                <div class="project-title-input">
+                    <label for="project-title">Project:</label>
+                    <input type="text" id="project-title" name="project-title" required>
+                </div>
+            </form>
+            <button class="submit" type="submit" form="newProject" value="submit">Submit</button>
+        </dialog>
+        <dialog class="task-dialog">
+            <button class="cancel" form="newListItem" value="cancel" formnovalidate>Cancel</button>
+            <form id="newListItem" method="dialog">
+                <div class="title-input">
+                    <label for="title">Task:</label>
+                    <input type="text" id="title" name="title" placeholder="*required" required>
+                </div>
+                <div class="due-input">
+                    <label for="due">Due:</label>
+                    <input type="date" id="due" name="due">
+                </div>
+                <div class="description-input">
+                    <label for="description">Description:</label>
+                    <textarea id="description" name="description" rows="1" cols="5"></textarea>
+                </div>
+                <fieldset>
+                    <legend>Priority</legend>
+                    <div class="priority-input">
+                        <div>
+                            <input type="radio" id="low" name="priority" value="low" checked>
+                            <label for="low">Low</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="normal" name="priority" value="normal">
+                            <label for="normal">Normal</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="high" name="priority" value="high">
+                            <label for="high">High</label>
+                        </div>
+                    </div>
+                </fieldset>
+                <div class="notes-input">
+                    <label for="notes">Notes:</label>
+                    <textarea id="notes" name="notes" rows="2" cols="5"></textarea>
+                </div>
+            </form>
+            <button class="submit" type="submit" form="newListItem" value="submit">Submit</button>
+        </dialog>
+        <div class="header">
+            <h1>Todo List</h1>
+        </div>
+        <div class="sidebar">
+            <h2>Projects</h2>
+            <div class="projects"></div>
+            <button class="add-project">Add Project</button>
+        </div>
+        <div class="main">
+            <h2>Tasks</h2>
+            <div class="tasks"></div>
+            <button class="add-task">Add Task</button>
+        </div>
+    </div>
+</body>
+</html>
